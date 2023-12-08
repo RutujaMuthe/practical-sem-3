@@ -1,0 +1,155 @@
+Que 1- Write a Java program to implement command pattern to test Remote control.
+       Suppose you are building a home automation syatem. There is a programmable remote which can be used to turn on & off various items in your home like lights, stereo, AC ettc. It looks something like this.
+
+// A simple Java program to demostrate
+// Implementation of command pattern using
+// a remote control example.
+// An interface for command
+
+interface Command
+{
+ public void execute();
+}
+//Light class & its corresponding command
+// classes
+class Light {
+   public void On() 
+    {
+        System.out.println("Light is on");
+    }
+
+    public void Off() 
+    {
+        System.out.println("Light is off");
+    }
+}
+
+// Concrete Command classes
+class LightOnCommand implements Command 
+ {
+    Light light;
+    // The constructor is passed the light it
+    // is going to control.
+
+   public LightOnCommand(Light light)
+   {
+        this.light = light;
+    }
+
+    public void execute() 
+    {
+        light.On();
+    }
+}
+
+class LightOffCommand implements Command
+ {
+   Light light;
+   public LightOffCommand(Light light) 
+    {
+        this.light = light;
+    }
+
+    public void execute()
+    {
+        light.Off();
+    }
+}
+
+// stereo and its command classes
+class stereo
+ {
+  public void on()
+   {
+    system.out.println("Stereo is on");
+   }
+  public void off()
+   {
+    system.out.println("Stereo is off");
+   }
+  public void setCD()
+   {
+    system.out.println("Stereo is set"+"for CD input");
+   }
+   public void setDVD()
+   {
+    system.out.println("Stereo is set"+"for DVD input");
+   }
+  public void setRadio()
+   {
+    system.out.println("Stereo is set"+"for Radio");
+   }
+  public void setVolume(int volume)
+   {
+   //code to set the volume
+    system.out.println("Stereo volume set"+"to"+volume);
+   }
+ }
+
+
+class StereoOffCommand implements Command
+ {
+  Stereo stereo;
+  public SterioOffCommand(Stereo stereo)
+   {
+    this.stereo=stereo;
+   }
+  public void execute()
+   {
+   stereo.off();
+   }
+  }
+
+class StereoOnWithCommand implements Command
+ {
+  Stereo stereo;
+  public SterioOnCommand(Stereo stereo)
+   {
+    this.stereo=stereo;
+   }
+  public void execute()
+   {
+   stereo.on();
+    stereo.setCD();
+     stereo.setVolume(11);
+   }
+  }
+
+//A simple remote control with one button
+class SimpleRemoteControl
+ {
+  Command slot;//only one button
+  public SimpleRemoteControl()
+   {
+   }
+   public void setCommand(Command command)
+   {
+    //set the command the remote will
+    //execute
+    slot=command;
+   }
+     public void buttonWasPressed()
+   {
+   slot.execute;
+   }
+  }
+
+//Driver class 
+class RemoteControlTest
+{
+  public static void main(String[] args)
+
+ {
+   SimpleRemoteControl remote = new SimpleRemoteControl();
+   Light light = new Light ()
+   Stereo stereo = new Stereo();
+
+  // we can change command dynamically
+   remote.setCommand(new LightOnCommand(light));
+   remote.button Was Pressed();
+   remote.setCommand(new StereoOn WithCDCommand(stereo));  
+   remote.buttonWasPressed();
+   remote.setCommand(new StereoOffCommand(stereo));
+   remote.button Was Pressed();
+ }
+}

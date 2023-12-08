@@ -1,0 +1,46 @@
+Que.Create a Node.js file that opens the requested file and returns the content to the client. If anything goes wrong, throw a 404 error
+Ans-
+const http= require ('http');
+const fs= require ('fs');
+constpath =require('path');
+
+const server=http. createServer ((req,res)=>
+{
+// Get the requested file path from the URL
+const filePath = path.join(_dirname, req.url);
+
+// Check if the file exists
+fs.access(filePath, fs.constants.F_OK, (err)=>
+{
+  if (err) 
+   {
+    // If the file doesn't exist, send a 404 response
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('File not found (404)');
+   }
+  else 
+   {
+    // If the file exists, read and serve its content
+    fs.readFile(filePath, 'utf8', (err, data) =>
+     {
+      if (err) 
+       {
+         // If there's an error reading the file, send a 500 response
+         res.writeHead(500, { 'Content-Type': 'text/plain' }); 
+         res.end('Internal Server Error (500)');
+       }
+      else
+       {
+        // If successful, send the file content with the appropriate content type 
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end(data);
+       }
+     });
+   }
+ });
+});
+const port = 3000;
+server.listen(port,()=>
+{
+ console.log('Server is running on http://localhost:${port}'); 
+});
